@@ -6,24 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
+    :root {
+      --bg: #0e1117;
+      --fg: #e6edf3;
+      --muted: #9da7c4;
+      --panel: #161b22;
+      --border: #30363d;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --shadow: rgba(0,0,0,0.65);
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --fg: #0f172a;
+      --muted: #475569;
+      --panel: #ffffff;
+      --border: #e5e7eb;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --shadow: rgba(0,0,0,0.15);
+    }
+
     body {
       font-family: system-ui, -apple-system, sans-serif;
       max-width: 1000px;
       margin: 3rem auto;
       padding: 0 1rem;
       line-height: 1.6;
-      background: #0e1117;
-      color: #e6edf3;
+      background: var(--bg);
+      color: var(--fg);
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
     h1 {
       margin-bottom: 0.2rem;
-      color: #ffffff;
     }
 
     .authors {
       margin-top: 0;
-      color: #9da7c4;
+      color: var(--muted);
     }
 
     .hero {
@@ -37,42 +59,69 @@
     .hero img {
       max-width: 100%;
       height: auto;
-      border-radius: 10px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.65);
+      border-radius: 12px;
+      box-shadow: 0 12px 35px var(--shadow);
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
     }
 
     .buttons a {
       display: inline-block;
-      margin-top: 1.25rem;
       padding: 0.75rem 1.25rem;
-      border-radius: 10px;
+      border-radius: 12px;
       text-decoration: none;
-      background: #3b82f6;
+      background: var(--primary);
       color: #ffffff;
       font-weight: 600;
       letter-spacing: 0.2px;
+      transition: transform 0.08s ease, background 0.15s ease;
     }
 
     .buttons a:hover {
-      background: #60a5fa;
+      background: var(--primary-hover);
+      transform: translateY(-1px);
     }
 
     .citation {
-      background: #161b22;
+      background: var(--panel);
       padding: 1rem 1.1rem;
-      border-radius: 10px;
+      border-radius: 12px;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.95rem;
       margin-top: 1.25rem;
-      border: 1px solid #30363d;
+      border: 1px solid var(--border);
     }
 
     footer {
       margin-top: 3.5rem;
       font-size: 0.9rem;
-      color: #8b949e;
-      border-top: 1px solid #30363d;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
       padding-top: 1rem;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--panel);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.45rem 0.7rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      line-height: 1;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.08s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
     }
 
     @media (max-width: 800px) {
@@ -84,6 +133,10 @@
 </head>
 
 <body>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+    🌙
+  </button>
 
   <h1>Introduction to Forestry Data Analysis with R</h1>
   <p class="authors"><strong>Andrew O. Finley</strong> and <strong>Jeffrey W. Doser</strong></p>
@@ -98,6 +151,10 @@
       <div class="buttons">
         <a href="https://github.com/finleya/IFDAR/raw/master/releases/IFDAR_book.zip">
           Book materials (datasets and scripts)
+        </a>
+
+        <a href="https://www.finley-lab.com/ifdar">
+          Read the open book (Bookdown)
         </a>
       </div>
 
@@ -116,6 +173,27 @@
   <footer>
     &copy; 2026 by Andrew O. Finley and Jeffrey W. Doser.
   </footer>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById("themeToggle");
+
+    function setTheme(theme) {
+      root.setAttribute("data-theme", theme);
+      toggle.textContent = theme === "light" ? "🌙" : "☀️";
+      localStorage.setItem("theme", theme);
+    }
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+
+    toggle.addEventListener("click", () => {
+      const current = root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      setTheme(current === "light" ? "dark" : "light");
+    });
+  </script>
 
 </body>
 </html>
