@@ -149,7 +149,7 @@
 
 <body>
 
-  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark mode">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
     🌙
   </button>
 
@@ -177,7 +177,7 @@
 
       <p>
         The open e-version will remain freely available. Print copies will be
-        available through Chapman &amp; Hall/CRC, an imprint of Routledge.
+        available through Chapman &amp; Hall/CRC.
       </p>
 
       <p>
@@ -208,12 +208,15 @@
     function setTheme(theme) {
       root.setAttribute("data-theme", theme);
       toggle.textContent = theme === "light" ? "🌙" : "☀️";
+      localStorage.setItem("theme", theme);
     }
 
-    // Default to light mode on each page load. This also clears any old
-    // saved dark-mode preference from earlier versions of this page.
-    localStorage.removeItem("theme");
-    setTheme("light");
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+	setTheme("light");
+    }
 
     toggle.addEventListener("click", () => {
       const current = root.getAttribute("data-theme") === "light" ? "light" : "dark";
