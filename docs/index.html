@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8">
   <title>Introduction to Forestry Data Analysis with R</title>
@@ -63,28 +63,43 @@
       box-shadow: 0 12px 35px var(--shadow);
     }
 
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
+    .action-panel {
       margin-top: 1.25rem;
+      margin-bottom: 1.4rem;
     }
 
-    .buttons a {
+    .primary-action {
       display: inline-block;
-      padding: 0.75rem 1.25rem;
+      padding: 0.85rem 1.35rem;
       border-radius: 12px;
       text-decoration: none;
       background: var(--primary);
       color: #ffffff;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.2px;
       transition: transform 0.08s ease, background 0.15s ease;
     }
 
-    .buttons a:hover {
+    .primary-action:hover {
       background: var(--primary-hover);
       transform: translateY(-1px);
+    }
+
+    .secondary-actions {
+      margin: 0.85rem 0 0 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .secondary-actions a {
+      color: var(--primary-hover);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .secondary-actions a:hover {
+      border-bottom-color: var(--primary-hover);
     }
 
     .citation {
@@ -134,7 +149,7 @@
 
 <body>
 
-  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark mode">
     🌙
   </button>
 
@@ -148,15 +163,27 @@
         published in print and ebook formats by Chapman &amp; Hall/CRC in 2026.
       </p>
 
-      <div class="buttons">
-        <a href="https://www.finley-lab.com/ifdar">
-          Read the open book (Bookdown)
+      <div class="action-panel">
+        <a class="primary-action" href="https://www.finley-lab.com/ifdar">
+          Read the free open e-version
         </a>
-	
-        <a href="https://github.com/finleya/IFDAR/raw/master/releases/IFDAR_book.zip">
-          Book materials (datasets and scripts)
-        </a>
+
+        <p class="secondary-actions">
+          <a href="https://github.com/finleya/IFDAR/raw/master/releases/IFDAR_book.zip">Download datasets and scripts</a>
+          <span aria-hidden="true"> &middot; </span>
+          <a href="https://www.routledge.com/Introduction-to-Forestry-Data-Analysis-with-R/Finley-Doser/p/book/9781032120270">Publisher page</a>
+        </p>
       </div>
+
+      <p>
+        The open e-version will remain freely available. Print copies will be
+        available through Chapman &amp; Hall/CRC, an imprint of Routledge.
+      </p>
+
+      <p>
+        We will also use this site to share additional teaching materials, including
+        lecture slides, labs, and exercises, as they become available.
+      </p>
 
       <h2>How to cite</h2>
       <div class="citation">
@@ -181,13 +208,12 @@
     function setTheme(theme) {
       root.setAttribute("data-theme", theme);
       toggle.textContent = theme === "light" ? "🌙" : "☀️";
-      localStorage.setItem("theme", theme);
     }
 
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
+    // Default to light mode on each page load. This also clears any old
+    // saved dark-mode preference from earlier versions of this page.
+    localStorage.removeItem("theme");
+    setTheme("light");
 
     toggle.addEventListener("click", () => {
       const current = root.getAttribute("data-theme") === "light" ? "light" : "dark";
