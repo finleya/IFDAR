@@ -48,6 +48,12 @@
       color: var(--muted);
     }
 
+    .authors a {
+      color: inherit;
+      text-decoration-color: var(--primary-hover);
+      text-underline-offset: 0.2em;
+    }
+
     .hero {
       display: grid;
       grid-template-columns: 1fr 280px;
@@ -64,42 +70,83 @@
     }
 
     .action-panel {
-      margin-top: 1.25rem;
-      margin-bottom: 1.4rem;
+      display: grid;
+      gap: 1rem;
+      margin: 1.25rem 0 2rem;
+    }
+
+    .edition-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+    }
+
+    .free-edition {
+      border-color: var(--primary);
+      border-left-width: 4px;
+    }
+
+    .edition-card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.1rem;
+    }
+
+    .edition-card p {
+      margin: 0 0 1rem;
+      color: var(--muted);
+    }
+
+    .primary-action,
+    .secondary-action {
+      display: inline-block;
+      padding: 0.75rem 1.1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      text-align: center;
     }
 
     .primary-action {
-      display: inline-block;
-      padding: 0.85rem 1.35rem;
-      border-radius: 12px;
-      text-decoration: none;
       background: var(--primary);
       color: #ffffff;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      transition: transform 0.08s ease, background 0.15s ease;
     }
 
     .primary-action:hover {
       background: var(--primary-hover);
-      transform: translateY(-1px);
     }
 
-    .secondary-actions {
-      margin: 0.85rem 0 0 0;
-      color: var(--muted);
-      font-size: 0.96rem;
+    .purchase-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
     }
 
-    .secondary-actions a {
+    .secondary-action {
       color: var(--primary-hover);
-      font-weight: 600;
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
+      border: 1px solid var(--border);
     }
 
-    .secondary-actions a:hover {
-      border-bottom-color: var(--primary-hover);
+    .secondary-action:hover {
+      border-color: var(--primary-hover);
+      background: var(--bg);
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 3px;
+    }
+
+    .resources {
+      border-top: 1px solid var(--border);
+      padding-top: 0.5rem;
+    }
+
+    .resources a {
+      color: var(--primary-hover);
+      font-weight: 700;
     }
 
     .citation {
@@ -110,6 +157,61 @@
       font-size: 0.95rem;
       margin-top: 1.25rem;
       border: 1px solid var(--border);
+      overflow-wrap: anywhere;
+    }
+
+    .citation a {
+      color: var(--primary-hover);
+    }
+
+    .bibtex {
+      margin-top: 1rem;
+    }
+
+    .bibtex summary {
+      color: var(--primary-hover);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .bibtex pre {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-x: auto;
+      padding: 1rem 1.1rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .about-authors {
+      border-top: 1px solid var(--border);
+      padding-top: 0.5rem;
+    }
+
+    .author-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .author-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+    }
+
+    .author-card h3 {
+      margin: 0 0 0.4rem;
+    }
+
+    .author-card h3 a {
+      color: var(--primary-hover);
+    }
+
+    .author-card p {
+      margin: 0;
     }
 
     footer {
@@ -144,6 +246,12 @@
         grid-template-columns: 1fr;
       }
     }
+
+    @media (max-width: 600px) {
+      .author-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 
@@ -154,7 +262,7 @@
   </button>
 
   <h1>Introduction to Forestry Data Analysis with R</h1>
-  <p class="authors"><strong>Andrew O. Finley</strong> and <strong>Jeffrey W. Doser</strong></p>
+  <p class="authors"><strong><a href="https://www.finley-lab.com/">Andrew O. Finley</a></strong> and <strong><a href="https://doserlab.com/people">Jeffrey W. Doser</a></strong></p>
 
   <div class="hero">
     <div>
@@ -163,39 +271,71 @@
         published in print and ebook formats by Chapman &amp; Hall/CRC in 2026.
       </p>
 
-      <div class="action-panel">
-        <a class="primary-action" href="https://www.finley-lab.com/ifdar">
-          Read the free open e-version
-        </a>
+      <h2 id="get-the-book">Get the book</h2>
+      <div class="action-panel" aria-labelledby="get-the-book">
+        <div class="edition-card free-edition">
+          <h3>Free online edition</h3>
+          <p>The open e-version remains freely available.</p>
+          <a class="primary-action" href="https://www.finley-lab.com/ifdar">
+            Read the free open e-version
+          </a>
+        </div>
 
-        <p class="secondary-actions">
-          <a href="https://github.com/finleya/IFDAR/raw/master/releases/IFDAR_book.zip">Download datasets and scripts</a>
-          <span aria-hidden="true"> &middot; </span>
-          <a href="https://www.routledge.com/Introduction-to-Forestry-Data-Analysis-with-R/Finley-Doser/p/book/9781032120270">Publisher page</a>
-        </p>
+        <div class="edition-card">
+          <h3>Paperback or hardcover</h3>
+          <p>Choose a print edition from the publisher or Amazon.</p>
+          <div class="purchase-actions">
+            <a class="secondary-action" href="https://www.routledge.com/Introduction-to-Forestry-Data-Analysis-with-R/Finley-Doser/p/book/9781032120270">Buy from the publisher</a>
+            <a class="secondary-action" href="https://a.co/d/01c8Wyhg">Buy on Amazon</a>
+          </div>
+        </div>
       </div>
 
-      <p>
-        The open e-version will remain freely available. Print copies will be
-        available through Chapman &amp; Hall/CRC.
-      </p>
+      <section class="resources" aria-labelledby="book-resources">
+        <h2 id="book-resources">Book resources</h2>
+        <p>Datasets and scripts accompany the online, paperback, and hardcover editions.</p>
+        <p><a href="https://github.com/finleya/IFDAR/raw/master/releases/IFDAR_book.zip">Download datasets and scripts</a></p>
+        <p>Additional teaching materials, including lecture slides, labs, and exercises, will be shared here as they become available.</p>
+      </section>
 
-      <p>
-        We will also use this site to share additional teaching materials, including
-        lecture slides, labs, and exercises, as they become available.
-      </p>
-
-      <h2>How to cite</h2>
-      <div class="citation">
-        Finley, A.O. and Doser, J.W. (2026). Introduction to Forestry Data Analysis with R.
-        Chapman &amp; Hall/CRC (forthcoming).
-      </div>
+      <section aria-labelledby="how-to-cite">
+        <h2 id="how-to-cite">How to cite</h2>
+        <div class="citation">
+          Finley, A. O., &amp; Doser, J. W. (2026). <em>Introduction to Forestry Data Analysis with R</em>.
+          Chapman &amp; Hall/CRC. <a href="https://doi.org/10.1201/9781003222699">https://doi.org/10.1201/9781003222699</a>
+        </div>
+        <details class="bibtex">
+          <summary>BibTeX citation</summary>
+          <pre><code>@book{finley2026forestry,
+  author    = {Finley, Andrew O. and Doser, Jeffrey W.},
+  title     = {Introduction to Forestry Data Analysis with {R}},
+  year      = {2026},
+  publisher = {Chapman &amp; Hall/CRC},
+  doi       = {10.1201/9781003222699},
+  url       = {https://doi.org/10.1201/9781003222699}
+}</code></pre>
+        </details>
+      </section>
     </div>
 
     <div>
       <img src="cover.png" alt="Book cover: Introduction to Forestry Data Analysis with R">
     </div>
   </div>
+
+  <section class="about-authors" aria-labelledby="about-the-authors">
+    <h2 id="about-the-authors">About the authors</h2>
+    <div class="author-grid">
+      <div class="author-card">
+        <h3><a href="https://www.finley-lab.com/">Andrew O. Finley</a></h3>
+        <p>Professor at Michigan State University with appointments in Forestry and Statistics and Probability.</p>
+      </div>
+      <div class="author-card">
+        <h3><a href="https://doserlab.com/people">Jeffrey W. Doser</a></h3>
+        <p>Assistant professor of quantitative forest science in North Carolina State University's Department of Forestry and Environmental Resources.</p>
+      </div>
+    </div>
+  </section>
 
   <footer>
     &copy; 2026 by Andrew O. Finley and Jeffrey W. Doser.
